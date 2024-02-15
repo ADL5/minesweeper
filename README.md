@@ -1,6 +1,8 @@
 # minesweeper
 its my beta minesweeper game.
 
+Maybe my code is not that good (I'm a beginner), but this is my first big project. I want to add a lot more to this application, but that will come later.
+
 Hidden feature.
 If you click on the emoticon with your right mouse button, a window will open in which you can enable/disable the recursive akkord function(default=False,u need to update value every session, because iam lazy) and view your record in each discipline.
 akkord - if when you click on a number around it the number of flags is equal to the value of the number, then all cells where there are no flags will open.
