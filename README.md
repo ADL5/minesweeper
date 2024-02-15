@@ -4,7 +4,7 @@ its my beta minesweeper game.
 Hidden feature.
 If you click on the emoticon with your right mouse button, a window will open in which you can enable/disable the recursive akkord function(default=False,u need to update value every session, because iam lazy) and view your record in each discipline.
 akkord - if when you click on a number around it the number of flags is equal to the value of the number, then all cells where there are no flags will open.
-A recursive chord is a chord that extends to adjacent numbers.
+A recursive akkord is a akkord that extends to adjacent numbers.
 to swap field size, found values n and m in code
 
 Rules.
