@@ -1,6 +1,6 @@
 from sys import exit
 from tkinter import *
-from tkinter.messagebox import showerror, showinfo
+from tkinter.messagebox import showerror
 from tkinter import ttk
 from random import randint
 from PIL import Image, ImageTk
@@ -9,11 +9,14 @@ import os
 import threading
 from json import load, dump
 
-data = {"record_8*8": None, 'record_16*16': None, "record_16*30": None}
+data = {"record_8*8": 10000, 'record_16*16': 10000, "record_16*30": 10000,"recursion_akkord": False}
 
 if not (os.path.exists('data_minesweeper.json')):
 	with open('data_minesweeper.json', 'w') as file:
 		dump(data, file)
+else:
+	with open('data_minesweeper.json', 'r') as file:
+		data = load(file)
 
 if os.path.exists('pictures'):
 	os.chdir('pictures')
@@ -21,7 +24,7 @@ else:
 	showerror('FileError', 'Required files were not found.')
 	exit()
 
-n = 8  #sizes field 8 8   16 16   16 30
+n = 8 #sizes field 8 8   16 16   16 30
 m = 8
 
 k = int()
@@ -29,7 +32,7 @@ flag_x = int()
 wid = int()
 hei = int()
 wid_plus = int()
-rel_hei = int()
+rel_hei_coils = int()
 flag_relx = int()
 flag_rely = int()
 btn_pady = int()
@@ -37,15 +40,17 @@ timer_relx = int()
 size = int()
 width = int()
 width_pic = int()
-
+rel_wid = int()
+hei_plus = int()
+rel_y = int()
 def th_16():
-	global k,flag_x,wid,hei,wid_plus,rel_hei,flag_relx,flag_rely,btn_pady,timer_relx,size,width,width_pic
+	global k,flag_x,wid,hei,wid_plus,rel_hei_coils,flag_relx,flag_rely,btn_pady,timer_relx,size,width,width_pic,rel_wid,hei_plus,rel_y
 	k = 99
 	flag_x = 30
 	wid = 1000
 	hei = 650
 	wid_plus = 300
-	rel_hei = 0.8
+	rel_hei_coils = 0.8
 	flag_relx = 0.15
 	flag_rely = 0.18
 	btn_pady = 30
@@ -53,14 +58,17 @@ def th_16():
 	size = 35
 	width = 63
 	width_pic = 63
+	rel_wid = 1
+	hei_plus = 50
+	rel_y = 125 / hei
 def six_16():
-	global k, flag_x, wid, hei, wid_plus, rel_hei, flag_relx, flag_rely, btn_pady, timer_relx, size, width, width_pic
+	global k, flag_x, wid, hei, wid_plus, rel_hei_coils, flag_relx, flag_rely, btn_pady, timer_relx, size, width, width_pic,rel_wid,hei_plus,rel_y
 	k = 40
-	flag_x = 47
-	wid = 750
-	hei = 875
+	flag_x = 36
+	wid = 600
+	hei = 675
 	wid_plus = 800
-	rel_hei = wid / hei
+	rel_hei_coils = 1
 	flag_relx = 0.15
 	flag_rely = 0.18
 	btn_pady = 30
@@ -68,14 +76,17 @@ def six_16():
 	size = 35
 	width = 63
 	width_pic = 63
+	rel_wid = 1
+	hei_plus = 50
+	rel_y = 125 / hei
 def eight_8():
-	global k, flag_x, wid, hei, wid_plus, rel_hei, flag_relx, flag_rely, btn_pady, timer_relx, size, width, width_pic
+	global k, flag_x, wid, hei, wid_plus, rel_hei_coils, flag_relx, flag_rely, btn_pady, timer_relx, size, width, width_pic,rel_wid,hei_plus,rel_y
 	k = 10
 	flag_x = 63
 	wid = 500
 	hei = 625
 	wid_plus = 800
-	rel_hei = wid / hei
+	rel_hei_coils = wid / hei
 	flag_relx = 0.149
 	flag_rely = 0.28
 	btn_pady = 30
@@ -84,7 +95,8 @@ def eight_8():
 	width = 63
 	width_pic = 63
 	size_records = 20
-	
+
+sizes_of_fields_func = {"8x8": eight_8,"16x16": six_16,"16x30":th_16}
 if m == 30:
 	th_16()
 elif n == m == 16:
@@ -105,8 +117,10 @@ root.geometry(f'{wid}x{hei}+{wid_plus}+{hei_plus}')
 root['bg'] = 'black'
 root.resizable(False,False)
 sizes = ['8x8','16x16','16x30']
+
+sizes = ['8x8','16x16','16x30']
 default_size = StringVar(value=sizes[0])
-enabled = IntVar()
+enabled = IntVar(value=data["recursion_akkord"])
 
 def bombs():
 	global field_game
@@ -162,60 +176,66 @@ def thread_timer():
 		count_timer += + 0.1
 	if win_flag:
 		count_timer = int(count_timer)
-		if data['record_8*8'] == None:
-			data['record_8*8'] = 100000
-		elif data['record_16*16'] == None:
-			data['record_16*16'] = 100000
-		elif data['record_16*39'] == None:
-			data['record_16*30'] = 100000
-		if m == 30 and count_timer < data['record_16*30']:
-			data['record_16*30'] = count_timer
-		elif n == m == 16 and count_timer < data['record_16*16']:
-			data['record_16*16'] = count_timer
-		elif n == 8 and count_timer < data['record_8*8']:
-			data['record_8*8'] = count_timer
+		if count_timer < data["record_8*8"] and m == 8:
+			data["record_8*8"] = count_timer
+		elif count_timer < data["record_16*16"] and m == 16:
+			data["record_16*16"] = count_timer
+		elif count_timer < data["record_16*30"] and m == 30:
+			data["record_16*30"] = count_timer
 		with open('data_minesweeper.json','w') as file:
-			print(os.getcwd())
 			dump(data,file)
 			
 def open_smile_frame(event):
-	global rec
+
+	def save_flag_recursion():
+		global data
+		data["recursion_akkord"] = enabled.get()
+		with open('data_minesweeper.json', 'w') as file:
+	 		dump(data,file)
+
+	def swap_field_size():
+		sizes_of_fields_func[default_size.get()]()
+		root.resizable(True,True)
+		root.geometry(f'{wid}x{hei}+{wid_plus}+{hei_plus}')
+		root.resizable(False,False)
+		frame_main.place_configure(relwidth=rel_wid, relheight=rel_hei_coils, rely=rel_y)
+
+		pic_default = picdefault.resize((flag_x, flag_y), Image.LANCZOS)
+		pic_default = ImageTk.PhotoImage(pic_default)
+		
+
+
+
+	def forget_smile_face():
+		new_game()
+		frame_smile.place_forget()
+
 	with open('data_minesweeper.json', 'r') as file:
 	 	data = load(file)
-	record8 = data['record_8*8']
-	record16 = data['record_16*16']
-	record30 = data['record_16*30']
-	if data['record_8*8'] == 100000:
+	record8 = data["record_8*8"]
+	record16 = data["record_16*16"]
+	record30 = data["record_16*30"]
+	if data["record_8*8"] == 10000:
 		record8 = None
-	elif data['record_16*16'] == 100000:
+	if data["record_16*16"] == 10000:
 		record16 = None
-	elif data['record_16*30'] == 100000:
+	if data["record_16*30"] == 10000:
 		record30 = None
-	# def create_new_window():
-	# 	global pic_default
-	# 	field_size = combobox_sizes_game.get()
-	# 	n,m = int(field_size.split('x')[0]),int(field_size.split('x')[1])
-	# 	if m == 30:
-	# 		th_16()
-	# 	elif n == m == 16:
-	# 		six_16()
-	# 	else:
-	# 		eight_8()
 
 	frame_smile = Frame(root, bg='gray60')
-	btn_smile_face = Button(frame_smile, image=pic_good_smile, border=0, activebackground='gray60', background='gray60',width=width, height=width, command=frame_smile.place_forget)
+	btn_smile_face = Button(frame_smile, image=pic_good_smile, border=0, activebackground='gray60', background='gray60',width=width, height=width, command=forget_smile_face)
 	btn_smile_face.pack(pady=btn_pady)
 	combobox_sizes_game = ttk.Combobox(frame_smile, values=sizes, textvariable=default_size, background='gray10',state="readonly")
 	combobox_sizes_game.pack()
-	btn_play = Button(frame_smile,text="PLAY",font=('unispace',10),width=20,height=1,background='gray80',activebackground='gray70',border=1)
+	btn_play = Button(frame_smile,text="PLAY",font=('unispace',10),width=20,height=1,background='gray80',activebackground='gray70',border=1,command=swap_field_size)
 	btn_play.pack(pady=5)
 	label_record_88 = Label(frame_smile,text=f'record 8x8: {record8} sec',background='gray60',font=("unispace",15),width=20,height=2)
 	label_record_88.pack()
 	label_record_1616 = Label(frame_smile, text=f'record 16x16: {record16} sec', background='gray60',font=("unispace", 15), width=30, height=2)
 	label_record_1616.pack()
-	label_record_1630 = Label(frame_smile, text=f'record 16x30: {record16} sec', background='gray60',font=("unispace", 15), width=30, height=2)
+	label_record_1630 = Label(frame_smile, text=f'record 16x30: {record30} sec', background='gray60',font=("unispace", 15), width=30, height=2)
 	label_record_1630.pack()
-	checkbtn_recursion = Checkbutton(frame_smile,text='recursion akkord',font=("unispace", 15),width=30, height=2,bg='gray60',activebackground='gray60',variable=enabled)
+	checkbtn_recursion = Checkbutton(frame_smile,text='recursion akkord',font=("unispace", 15),width=30, command=save_flag_recursion,height=2,bg='gray60',activebackground='gray60',variable=enabled)
 	checkbtn_recursion.pack()
 	frame_smile.place(relwidth=1, relheight=1)
 
@@ -251,8 +271,8 @@ pic_flag = Image.open('cell_flag.png')
 pic_flag = pic_flag.resize((flag_x, flag_y), Image.LANCZOS)
 pic_flag = ImageTk.PhotoImage(pic_flag)
 
-pic_default = Image.open('cell.png')
-pic_default = pic_default.resize((flag_x, flag_y), Image.LANCZOS)
+picdefault = Image.open('cell.png')
+pic_default = picdefault.resize((flag_x, flag_y), Image.LANCZOS)
 pic_default = ImageTk.PhotoImage(pic_default)
 
 pic_bomb = Image.open('cell_bomb.png')
@@ -309,6 +329,7 @@ field_game = [[0] * m for _ in range(n)]  # field of game -1 = bomb 0-8 = cell
 field_player = [[-2] * m for i in range(n)]  # -2 = closed; -1 = flag; 0-8 = cell;
 field_btns = [[0] * m for i in range(n)]  # list of buttons
 os.chdir('..')
+
 def win():
 	count_closed = 0
 	for i in range(n):
@@ -419,7 +440,30 @@ def action(event):
 			dfs(index_i, index_j)
 		win()
 
+def buttonpress(event):
+	global field_btns, pic_default
+	num_btn = event.widget.cget('text').split('_')
+	index_i = int(num_btn[0])
+	index_j = int(num_btn[1])
+	if field_player[index_i][index_j] < 0:
+		return
+	for i2 in range(index_i-1,index_i+2):
+		for j2 in range(index_j-1,index_j+2):
+			if 0<=i2<=n and 0<=j2<=m and field_player[i2][j2] == -2:
+				field_btns[i2][j2]['image'] = pic_0
 
+def buttonrelease(event):
+	global field_btns
+	num_btn = event.widget.cget('text').split('_')
+	index_i = int(num_btn[0])
+	index_j = int(num_btn[1])
+	if field_player[index_i][index_j] < 0:
+		return
+	for i2 in range(index_i-1,index_i+2):
+		for j2 in range(index_j-1,index_j+2):
+			if 0<=i2<n and 0<=j2<m and field_player[i2][j2] == -2:
+				field_btns[i2][j2]['image'] = pic_default
+				
 frame_main = Frame(root, bg='black')
 for i in range(n):
 	frame_main.columnconfigure(index=i, weight=1)
@@ -428,9 +472,11 @@ for i in range(n):
 		field_btns[i][j] = Label(frame_main, text=f'{i}_{j}', image=pic_default, background='gray60')
 		field_btns[i][j].bind('<Button-1>', action)
 		field_btns[i][j].bind('<Button-3>', action)
+		field_btns[i][j].bind('<ButtonPress-2>', buttonpress)
+		field_btns[i][j].bind('<ButtonRelease-2>', buttonrelease)
 		field_btns[i][j].grid(row=i, column=j, sticky='nsew')
 bombs()
 nums_for_bombs()
-frame_main.place(relwidth=rel_wid, relheight=rel_hei, rely=rel_y)
+frame_main.place(relwidth=rel_wid, relheight=rel_hei_coils, rely=rel_y)
 
 root.mainloop()
