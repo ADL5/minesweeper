@@ -1,5 +1,5 @@
 # minesweeper
-its my beta minesweeper game.
+its my minesweeper game.
 
 Maybe my code is not that good (I'm a beginner), but this is my first big project. I want to add a lot more to this application, but that will come later.
 
