@@ -8,7 +8,7 @@ from time import sleep
 import os
 import threading
 from json import load, dump
-#сделать статистику: победы, всего игры процент побед, сколько влажков поставил, сколько клеток открыл, сколько раз в какой режим сыграл
+
 n = int() #sizes field 8 8   16 16   16 30
 m = int()
 k = int()
@@ -60,19 +60,7 @@ def th_16():
 	rel_wid = 1
 	hei_plus = 50
 	rel_y = 125/hei
-"""k = 40
-	flag_x = 47
-	wid = 750
-	hei = 875
-	wid_plus = 800
-	rel_hei = wid / hei
-	flag_relx = 0.15
-	flag_rely = 0.18
-	btn_pady = 30
-	timer_relx = 0.85
-	size = 35
-	width = 63
-	width_pic = 63"""
+
 def six_16():
 	global n,m,k, flag_x, wid, hei, wid_plus, rel_hei_coils, flag_relx, flag_rely, btn_pady, timer_relx, size,rel_wid,hei_plus,rel_y
 	n = m = 16
