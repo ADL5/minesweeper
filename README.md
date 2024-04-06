@@ -1,7 +1,7 @@
 # minesweeper
-its my minesweeper game.
+its minesweeper game.
 
-Maybe my code is not that good (I'm a beginner), but this is my first big project. I want to add a lot more to this application, but that will come later.
+Maybe my code is not that good (I'm a beginner), but this is my first big project.
 
 Rules.
 The flat playing field is divided into adjacent cells (squares), some of which are “mined”; the number of “mined” cells is known. The goal of the game is to open all cells that do not contain mines.
