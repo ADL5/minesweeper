@@ -53,7 +53,7 @@ def th_16():
 	wid_plus = 300
 	rel_hei_coils = 0.8
 	flag_relx = 0.15
-	flag_rely = 0.18
+	flag_rely = 0.28
 	btn_pady = 30
 	timer_relx = 0.85
 	size = 35
@@ -67,12 +67,12 @@ def six_16():
 	k = 40
 	flag_x = 30
 	wid = 525
-	hei = 628
+	hei = 627
 	wid_plus = 800
-	rel_y = 125/hei
+	rel_y = 122/hei
 	rel_hei_coils = 0.8
 	flag_relx = 0.15
-	flag_rely = 0.18
+	flag_rely = 0.27
 	btn_pady = 30
 	timer_relx = 0.85
 	size = 35
@@ -193,6 +193,10 @@ if os.path.exists('pictures'):
 		win_smile = win_smile.resize((width_pic,width_pic), Image.LANCZOS)
 		win_smile = ImageTk.PhotoImage(win_smile)
 
+		shock_smile = Image.open('shock_smile.png')
+		shock_smile = shock_smile.resize((width_pic,width_pic), Image.LANCZOS)
+		shock_smile = ImageTk.PhotoImage(shock_smile)
+
 		pic_flag = Image.open('cell_flag.png')
 		pic_flag = pic_flag.resize((flag_x, flag_y), Image.LANCZOS)
 		pic_flag = ImageTk.PhotoImage(pic_flag)
@@ -306,15 +310,15 @@ def thread_timer():
 	count_timer = 0
 	timer_flag = True
 	while timer_flag:
-		if abs(count_timer-int(count_timer)) <= 0.1:
+		if abs(count_timer-count_timer) <= 0.1:
 			try:
-				label_timer['text'] = int(count_timer)
+				label_timer['text'] = round(count_timer,1)
 			except:
 				exit()
 		sleep(0.1)
 		count_timer += + 0.1
 	if win_flag:
-		count_timer = int(count_timer)
+		count_timer = round(count_timer,1)
 		if count_timer < data["record_8*8"] and m == 8:
 			data["record_8*8"] = count_timer
 		elif count_timer < data["record_16*16"] and m == 16:
@@ -348,7 +352,7 @@ btn_smile = Button(frame_side, image=pic_good_smile, border=0, command=new_game,
 btn_smile.bind("<Button-3>", open_smile_frame)
 btn_smile.pack(pady=btn_pady)
 label_timer = Label(frame_side, text=0, background='gray60', font=('unispace', size))
-label_timer.place(relx=timer_relx, rely=flag_rely, anchor='ne')
+label_timer.place(relx=timer_relx+0.035, rely=flag_rely, anchor='ne')
 frame_side.place(relwidth=1, relheight=0.2)
 
 field_game = [[0] * m for _ in range(n)]  # field of game -1 = bomb 0-8 = cell
@@ -469,9 +473,10 @@ def buttonpress(event):
 	index_j = int(num_btn[1])
 	if field_player[index_i][index_j] < 0:
 		return
+	btn_smile['image'] = shock_smile
 	for i2 in range(index_i-1,index_i+2):
 		for j2 in range(index_j-1,index_j+2):
-			if 0<=i2<=n and 0<=j2<=m and field_player[i2][j2] == -2:
+			if 0<=i2<n and 0<=j2<m and field_player[i2][j2] == -2:
 				field_btns[i2][j2]['image'] = pic_0
 
 def buttonrelease(event):
@@ -481,6 +486,7 @@ def buttonrelease(event):
 	index_j = int(num_btn[1])
 	if field_player[index_i][index_j] < 0:
 		return
+	btn_smile['image'] = pic_good_smile
 	for i2 in range(index_i-1,index_i+2):
 		for j2 in range(index_j-1,index_j+2):
 			if 0<=i2<n and 0<=j2<m and field_player[i2][j2] == -2:
