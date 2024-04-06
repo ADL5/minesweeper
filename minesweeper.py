@@ -135,10 +135,10 @@ if os.path.exists('pictures'):
 		pic_good_smile = Image.open('good_smile.png')
 		pic_good_smile = pic_good_smile.resize((63, 63), Image.LANCZOS)
 		pic_good_smile = ImageTk.PhotoImage(pic_good_smile)
-	except:
-		showerror('FileError', 'Required files were not found.')
+		os.chdir('..')
+	except FileNotFoundError:
+		showerror('FileError1', 'Required files were not found.')
 		exit()
-	os.chdir('..')
 else:
 	showerror('FileError', 'Required files were not found.')
 	exit()
@@ -158,6 +158,8 @@ label_record_1630 = Label(root_smile_face, text=f'record 16x30: {record30} sec',
 label_record_1630.pack()
 checkbtn_recursion = Checkbutton(root_smile_face,text='recursion akkord',font=("unispace", 15),width=30, command=save_flag_recursion,height=2,bg='gray60',activebackground='gray60',variable=enabled)
 checkbtn_recursion.pack()
+label_copyright = Label(root_smile_face,text='©copyright by abduramanov adil',font=('ucispace',9,'bold'),bg='gray60')
+label_copyright.place(relwidth=0.4,relheight=0.03,relx=0.3,rely=0.96)
 root_smile_face.mainloop()
 
 end_flag = False
@@ -246,14 +248,15 @@ if os.path.exists('pictures'):
 		pic_8 = Image.open('cell_8.png')
 		pic_8 = pic_8.resize((flag_x, flag_y), Image.LANCZOS)
 		pic_8 = ImageTk.PhotoImage(pic_8)
-	except:
+		os.chdir('..')
+		list_picks = [pic_0, pic_1, pic_2, pic_3, pic_4, pic_5, pic_6, pic_7, pic_8]
+	except FileNotFoundError:
 		showerror('FileError', 'Required files were not found.')
 		exit()
-	os.chdir('..')
-	list_picks = [pic_0, pic_1, pic_2, pic_3, pic_4, pic_5, pic_6, pic_7, pic_8]
+	except ValueError:
+		exit()
 else:
 	showerror('FileError', 'Required files were not found.')
-	exit()
 
 def bombs():
 	global field_game
@@ -297,7 +300,7 @@ def new_game(count=True):
 	for i in range(n):
 		for j in range(m):
 			field_btns[i][j]['image'] = pic_default
-		
+
 def thread_timer():
 	global timer_flag
 	count_timer = 0
@@ -334,6 +337,8 @@ def open_smile_frame(event):
 	label_record_1630.pack()
 	checkbtn_recursion = Checkbutton(frame_smile,text='recursion akkord',font=("unispace", 15),width=30, command=save_flag_recursion,height=2,bg='gray60',activebackground='gray60',variable=enabled)
 	checkbtn_recursion.pack()
+	label_copyright = Label(frame_smile,text='©copyright by abduramanov adil',font=('ucispace',9,'bold'),bg='gray60')
+	label_copyright.place(relwidth=0.4,relheight=0.03,relx=0.3,rely=0.96)
 	frame_smile.place(relwidth=1, relheight=1)
 
 frame_side = Frame(root, bg='gray60')
