@@ -8,7 +8,7 @@ from time import sleep
 import os
 import threading
 from json import load, dump
-
+#сделать отдельный поток для статистики. среднее время всего игр процент побед 
 n = int() #sizes field 8 8   16 16   16 30
 m = int()
 k = int()
@@ -310,13 +310,13 @@ def thread_timer():
 	count_timer = 0
 	timer_flag = True
 	while timer_flag:
+		sleep(0.1)
+		count_timer += + 0.1
 		if abs(count_timer-count_timer) <= 0.1:
 			try:
 				label_timer['text'] = round(count_timer,1)
 			except:
 				exit()
-		sleep(0.1)
-		count_timer += + 0.1
 	if win_flag:
 		count_timer = round(count_timer,1)
 		if count_timer < data["record_8*8"] and m == 8:
@@ -380,14 +380,14 @@ def akkord(x, y):
 		return
 	for x2 in range(x - 1, x + 2):
 		for y2 in range(y - 1, y + 2):
-			if 0 <= x2 < n and 0 <= y2 < m and not (field_player[x2][y2] > -1):
+			if 0 <= x2 < n and 0 <= y2 < m and field_player[x2][y2] <= -1:
 				if field_game[x2][y2] == -1 and field_player[x2][y2] != -1:
 					show_field(x2, y2)
 					return
 				dfs(x2, y2)
 				if recursion:
 					akkord(x2, y2)
-
+					
 def dfs(x, y):
 	if x < 0 or x >= n or y < 0 or y >= m or field_player[x][y] > -2:
 		return
