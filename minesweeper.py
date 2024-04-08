@@ -158,8 +158,8 @@ label_record_1630 = Label(root_smile_face, text=f'record 16x30: {record30} sec',
 label_record_1630.pack()
 checkbtn_recursion = Checkbutton(root_smile_face,text='recursion akkord',font=("unispace", 15),width=30, command=save_flag_recursion,height=2,bg='gray60',activebackground='gray60',variable=enabled)
 checkbtn_recursion.pack()
-label_copyright = Label(root_smile_face,text='©copyright by abduramanov adil',font=('ucispace',9,'bold'),bg='gray60')
-label_copyright.place(relwidth=0.4,relheight=0.03,relx=0.3,rely=0.96)
+label_copyright = Label(root_smile_face,text='©copyright by Abduramanov Adil, 2024',font=('ucispace',9,'bold'),bg='gray60')
+label_copyright.place(relwidth=0.5,relheight=0.03,relx=0.25,rely=0.96)
 root_smile_face.mainloop()
 
 end_flag = False
@@ -341,8 +341,8 @@ def open_smile_frame(event):
 	label_record_1630.pack()
 	checkbtn_recursion = Checkbutton(frame_smile,text='recursion akkord',font=("unispace", 15),width=30, command=save_flag_recursion,height=2,bg='gray60',activebackground='gray60',variable=enabled)
 	checkbtn_recursion.pack()
-	label_copyright = Label(frame_smile,text='©copyright by abduramanov adil',font=('ucispace',9,'bold'),bg='gray60')
-	label_copyright.place(relwidth=0.4,relheight=0.03,relx=0.3,rely=0.96)
+	label_copyright = Label(frame_smile,text='©copyright by Abduramanov Adil, 2024',font=('ucispace',9,'bold'),bg='gray60')
+	label_copyright.place(relwidth=0.5,relheight=0.03,relx=0.25,rely=0.96)
 	frame_smile.place(relwidth=1, relheight=1)
 
 frame_side = Frame(root, bg='gray60')
