@@ -1,7 +1,7 @@
 # minesweeper
 its minesweeper game.
 
-Maybe my code is not that good (I'm a beginner), but this is my first big project.
+This is my first big project.
 
 My contacts:
 discord: adl1
