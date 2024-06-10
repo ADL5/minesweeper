@@ -16,3 +16,5 @@ Hidden feature.
 !akkord - if when you click on a number around it the number of flags is equal to the value of the number, then all cells where there are no flags will open.
 A recursive chord is a chord that extends to adjacent numbers
 !if u press on nun with middle mouse button u can see closed coils around this coil, it is help u than u play a big field.
+
+[Screenshot](https://github.com/blob/main/Screenshot_28.png)
